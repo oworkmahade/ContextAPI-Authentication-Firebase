@@ -13,6 +13,7 @@ import Profile from "./components/Profile/Profile";
 import Register from "./components/Register/Register";
 import Logout from "./components/LogOut/Logout";
 import Settings from "./components/Settings/Settings";
+import { HelmetProvider } from "react-helmet-async";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   </StrictMode>,
 );
