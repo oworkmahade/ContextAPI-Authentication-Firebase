@@ -25,7 +25,7 @@ const Register = () => {
         console.log(result.user);
         console.log(name, email, password, termsChecked);
         e.target.reset("");
-        console.log("user signIn in successful");
+        console.log("user signUp/Registration is successful");
       })
       .catch((error) => {
         console.log(error.message);

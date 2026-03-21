@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const navLink = (
   <>
@@ -19,7 +21,17 @@ const navLink = (
     </li>
   </>
 );
+
 const Navbar = () => {
+  // useContext for getting value from AuthContext
+  const authInfo = useContext(AuthContext);
+  const { logOut } = authInfo;
+
+  const handleSignOut = () => {
+    logOut()
+      .then(() => console.log("log out successful"))
+      .catch((error) => console.log(error.message));
+  };
   return (
     <div className="shadow-sm navbar bg-base-100">
       <div className="navbar-start">
@@ -93,7 +105,7 @@ const Navbar = () => {
               <NavLink to="/login">Login</NavLink>
             </li>
             <li>
-              <NavLink to="/logout">
+              <NavLink onClick={handleSignOut} to="/">
                 Sign out{" "}
                 <span>
                   <MdLogout />
