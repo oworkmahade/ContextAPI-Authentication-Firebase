@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 const Register = () => {
+  // useContext for getting value from AuthContext
+  const authInfo = useContext(AuthContext);
+  const { createPasswordBasedAcc } = authInfo;
+
   // state or showing password
   const [showPassword, setShowPassword] = useState(null);
 
@@ -13,7 +18,19 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const termsChecked = e.target.terms.checked;
-    console.log(name, email, password, termsChecked);
+
+    // call createPasswordBasedAcc from AuthProvider.jsx
+    createPasswordBasedAcc(email, password)
+      .then((result) => {
+        console.log(result.user);
+        console.log(name, email, password, termsChecked);
+        e.target.reset("");
+        console.log("user signIn in successful");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        e.target.reset("");
+      });
   };
 
   return (

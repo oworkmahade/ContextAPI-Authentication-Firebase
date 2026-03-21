@@ -1,16 +1,32 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 const Login = () => {
   // state for holding email from input field using useRef
   const emailRef = useRef(null);
+
+  // useContext for getting value from AuthContext
+  const authInfo = useContext(AuthContext);
+  const { userSignIn } = authInfo;
 
   // form handle login
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+
+    // call userSignIn from AuthProvider.jsx
+    userSignIn(email, password)
+      .then((result) => {
+        console.log(result.user);
+        e.target.reset("");
+        console.log("user logged in successful");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        e.target.reset("");
+      });
   };
 
   const handlePasswordReset = () => {
