@@ -2,8 +2,10 @@ import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import auth from "../firebase/firebase.config";
@@ -56,6 +58,16 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  // google signIn
+  // Authenticate Using Google with JavaScript
+  // Create an instance of the Google provider object
+  // To sign in with a pop-up window, call signInWithPopup
+  const googleProvider = new GoogleAuthProvider();
+
+  const googleLogin = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
+
   // SignOut
   // user defined function name should be logOut because return authentication function name is signOut to avoid conflict
   const logOut = () => {
@@ -69,6 +81,7 @@ const AuthProvider = ({ children }) => {
     logOut,
     user,
     loading,
+    googleLogin,
   };
 
   return (

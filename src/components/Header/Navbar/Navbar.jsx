@@ -104,7 +104,9 @@ const Navbar = () => {
             </li>
 
             <li>
-              <NavLink to="/login">Login</NavLink>
+              <NavLink className="font-bold" to="/login">
+                Login
+              </NavLink>
             </li>
 
             {user && (

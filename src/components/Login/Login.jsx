@@ -8,7 +8,7 @@ const Login = () => {
 
   // useContext for getting value from AuthContext
   const authInfo = useContext(AuthContext);
-  const { userSignIn } = authInfo;
+  const { userSignIn, googleLogin } = authInfo;
 
   // form handle login
   const handleLogin = (e) => {
@@ -29,6 +29,12 @@ const Login = () => {
       });
   };
 
+  // handle google sign In
+  const handleGoogleSignIn = () => {
+    googleLogin();
+  };
+
+  // handle password reset
   const handlePasswordReset = () => {
     console.log("password reset link clicked");
   };
@@ -105,14 +111,14 @@ const Login = () => {
       </p>
 
       {/* optional */}
-      {/* <div className="flex flex-row items-center justify-center mt-4">
+      <div className="flex flex-row items-center justify-center mt-4">
         <input
           onClick={handleGoogleSignIn}
           type="submit"
           value="Google Login"
           className="btn"
         />
-      </div> */}
+      </div>
     </div>
   );
 };
