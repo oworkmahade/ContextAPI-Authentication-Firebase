@@ -16,12 +16,16 @@ export const AuthContext = createContext(null);
 // create provider with putting the whole  apps as a children by wrapping <RouterProvider router={router} /> with  <AuthProvider></AuthProvider> in main.jsx
 // set value named authInfo or anything else changed latter
 const AuthProvider = ({ children }) => {
+  // loading state declaration to fix refresh related bug
+  const [loading, setLoading] = useState(true);
+
   // state to set user null/active
   const [user, setUser] = useState(null);
   // Create a password-based account
   // create a user defined function , return createUserWithEmailAndPassword with parameter auth , email and password will get from caller file/ register
   // import { createUserWithEmailAndPassword } from "firebase/auth";
   const createPasswordBasedAcc = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
@@ -29,6 +33,7 @@ const AuthProvider = ({ children }) => {
   // signInUser
   // create a user defined function , return signInWithEmailAndPassword with parameter auth , email and password will get from caller file/ login
   const userSignIn = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -44,6 +49,7 @@ const AuthProvider = ({ children }) => {
         "Observing current user inside useEffect of AuthProvider",
         currentUser,
       );
+      setLoading(false);
     });
     return () => {
       unSubscribe();
@@ -53,6 +59,7 @@ const AuthProvider = ({ children }) => {
   // SignOut
   // user defined function name should be logOut because return authentication function name is signOut to avoid conflict
   const logOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
@@ -61,6 +68,7 @@ const AuthProvider = ({ children }) => {
     userSignIn,
     logOut,
     user,
+    loading,
   };
 
   return (

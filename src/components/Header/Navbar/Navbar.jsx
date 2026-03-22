@@ -25,13 +25,15 @@ const navLink = (
 const Navbar = () => {
   // useContext for getting value from AuthContext
   const authInfo = useContext(AuthContext);
-  const { logOut } = authInfo;
+  // receive logout and user from AuthContext
+  const { logOut, user } = authInfo;
 
   const handleSignOut = () => {
     logOut()
       .then(() => console.log("log out successful"))
       .catch((error) => console.log(error.message));
   };
+
   return (
     <div className="shadow-sm navbar bg-base-100">
       <div className="navbar-start">
@@ -104,14 +106,17 @@ const Navbar = () => {
             <li>
               <NavLink to="/login">Login</NavLink>
             </li>
-            <li>
-              <NavLink onClick={handleSignOut} to="/">
-                Sign out{" "}
-                <span>
-                  <MdLogout />
-                </span>
-              </NavLink>
-            </li>
+
+            {user && (
+              <li>
+                <NavLink onClick={handleSignOut} to="/">
+                  Sign out{" "}
+                  <span>
+                    <MdLogout />
+                  </span>
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>

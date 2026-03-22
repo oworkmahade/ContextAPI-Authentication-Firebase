@@ -15,6 +15,7 @@ import Logout from "./components/LogOut/Logout";
 import Settings from "./components/Settings/Settings";
 import { HelmetProvider } from "react-helmet-async";
 import AuthProvider from "./components/Provider/AuthProvider";
+import PrivateRoutes from "./routes/PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
 
       {
         path: "/dashboard",
-        element: <Dashboard></Dashboard>,
+        element: (
+          <PrivateRoutes>
+            <Dashboard></Dashboard>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/footer",
@@ -41,11 +46,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/orders",
-        element: <Orders></Orders>,
+        element: (
+          <PrivateRoutes>
+            <Orders></Orders>
+          </PrivateRoutes>
+          //it first hit PrivateRoutes and check whether user exists or not if exist then allow children(Orders) otherwise go to login
+        ),
       },
       {
         path: "/profile",
-        element: <Profile></Profile>,
+        element: (
+          <PrivateRoutes>
+            <Profile></Profile>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "/register",
